@@ -2,9 +2,9 @@ import React from 'react';
 
 import Stage from './Stage';
 
-const Board = ({ stagesNames, stagesTasks }) => {
+const Board = ({ stagesNames, stagesTasks, OnclickSelected }) => {
   return (
-    <div>
+    <div> 
       <h1>Kanban board</h1>
       <div style={{
         display: 'flex',
@@ -15,6 +15,7 @@ const Board = ({ stagesNames, stagesTasks }) => {
             key={stagesNames[idx]}
             name={stagesNames[idx]}
             tasks={tasks}
+            OnclickSelected={OnclickSelected}
           />
         ))}
       </div>

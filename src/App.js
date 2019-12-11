@@ -22,8 +22,14 @@ class App extends Component {
           { name: 'task 8', stage: 2 },
           { name: 'task 9', stage: 3 },
       ],
+      nameTask: '',
       buttonCond: true,
-      nameTask: ''
+      selectedTask: '',
+      activateButtons: {
+        back: true,
+        forward: true,
+        delete:true
+      }
     };
     this.stagesNames = ['Backlog', 'To Do', 'Ongoing', 'Done'];
 
@@ -34,7 +40,8 @@ class App extends Component {
 
   OnClickCreateTask(){
     let newTask = this.state.tasks;
-    newTask.push({name:this.state.nameTask, stage: 0})
+    newTask.push({name:this.state.nameTask, stage: 0});
+    document.getElementById("taskInput").value = "";
     this.setState({
       tasks: newTask
     })
@@ -49,13 +56,19 @@ class App extends Component {
       });
     }else{
       this.setState({buttonCond: true});
-
     }
+  }
+  
+  OnclickSelected = (e) =>{
+    const {id} = e.target;
+    this.setState({
+      selectedTask: document.getElementById(id).innerHTML
+    })
     
   }
 
   render() {
-    const { tasks, buttonCond, nameTask } = this.state;
+    const { tasks, buttonCond, nameTask, selectedTask } = this.state;
 
     let stagesTasks = [];
     for (let i = 0; i < NUM_STAGES; ++i) {
@@ -71,11 +84,12 @@ class App extends Component {
         <Controls 
         OnClickCreateTask={this.OnClickCreateTask}
         buttonCond={buttonCond}
-        nameTask={nameTask}
+        selectedTask={selectedTask}
         handleOnChange={this.handleOnChange}/>
         <Board
           stagesTasks={stagesTasks}
           stagesNames={this.stagesNames}
+          OnclickSelected={this.OnclickSelected}
         />
       </div>
     );

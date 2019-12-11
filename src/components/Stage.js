@@ -2,7 +2,7 @@ import React from 'react';
 
 import Task from './Task';
 
-const Stage = ({ name, stageId, tasks }) => {
+const Stage = ({ name, stageId, tasks, OnclickSelected }) => {
   return (
     <div
       data-testid={`stage-${stageId}`}
@@ -18,6 +18,7 @@ const Stage = ({ name, stageId, tasks }) => {
           <Task
             key={task.name}
             name={task.name}
+            OnclickSelected={OnclickSelected}
           />
         ))}
       </div>
