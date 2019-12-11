@@ -13,7 +13,7 @@
     "save": "^2.3.1"
   },
   "scripts": {
-    "start": "HOST=0.0.0.0 PORT=8000 ./node_modules/.bin/react-scripts start",
+    "start": "react-scripts start",
     "pretest": "npm install",
     "test": "rm -rf ./junit.xml && ./node_modules/.bin/react-scripts test --verbose --env=jsdom --testResultsProcessor ./node_modules/jest-junit"
   },
@@ -26,3 +26,4 @@
     "react-test-renderer": "^16.2.0"
   }
 }
+

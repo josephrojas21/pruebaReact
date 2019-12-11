@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 
 class Controls extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      
+    }
+
+  }
+
+  
+
   render() {
+    const {OnClickCreateTask, nameTask, buttonCond, handleOnChange } = this.props;
     return (
       <div style={{ padding: '1rem', background: '#D6F3FF' }}>
         <h1>Controls</h1>
@@ -10,11 +21,13 @@ class Controls extends Component {
             placeholder="New task name"
             style={{ fontSize: '1rem' }}
             data-testid="new-task-name-input"
+            onChange={handleOnChange}
           />
           <button
             style={{ marginLeft: '1rem' }}
-            disabled
+            disabled={buttonCond}
             data-testid="create-task-btn"
+            onClick={OnClickCreateTask}
           >
             Create
           </button>
