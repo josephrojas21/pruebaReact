@@ -35,9 +35,9 @@ class App extends Component {
 
     this.OnClickCreateTask = this.OnClickCreateTask.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
-
   }
 
+  // this function is for create  a new task
   OnClickCreateTask(){
     let newTask = this.state.tasks;
     newTask.push({name:this.state.nameTask, stage: 0});
@@ -47,6 +47,40 @@ class App extends Component {
     })
   }
 
+  // this function is to get the name of the task and set the name in the input, and control the state of buttons
+  OnclickSelected = (e) =>{
+    const {id} = e.target;
+    let name = document.getElementById(id).innerHTML;
+    let tasks = this.state.tasks;
+    let buttons = this.state.activateButtons;
+    let stage = null;
+
+    for (const key in tasks) {
+        const element = tasks[key];
+        if(element.name === name){
+            stage = element.stage
+        }
+    }
+    if(stage === 0 ){
+      buttons.back = true; 
+      buttons.delete = false;
+      buttons.forward = false
+    }else if(stage === 1 || stage === 2){
+      buttons.back = false;
+      buttons.forward = false;
+      buttons.delete = false;
+    }else{
+      buttons.back = false;
+      buttons.forward = true;
+      buttons.delete = false;
+    }
+    this.setState({
+      selectedTask: document.getElementById(id).innerHTML,
+      activateButtons: buttons
+    })
+  }
+
+  // this function for disabled or enable create button
   handleOnChange(e){
     const {value } = e.target;
     if(value.length > 0){
@@ -58,17 +92,16 @@ class App extends Component {
       this.setState({buttonCond: true});
     }
   }
-  
-  OnclickSelected = (e) =>{
-    const {id} = e.target;
-    this.setState({
-      selectedTask: document.getElementById(id).innerHTML
-    })
+
+  handleButtonActions(e){
     
   }
 
+  
+  
+
   render() {
-    const { tasks, buttonCond, nameTask, selectedTask } = this.state;
+    const { tasks, buttonCond, activateButtons, selectedTask } = this.state;
 
     let stagesTasks = [];
     for (let i = 0; i < NUM_STAGES; ++i) {
@@ -85,6 +118,8 @@ class App extends Component {
         OnClickCreateTask={this.OnClickCreateTask}
         buttonCond={buttonCond}
         selectedTask={selectedTask}
+        activateButtons={activateButtons}
+        handleOnChangeButtons={this.handleOnChangeButtons}
         handleOnChange={this.handleOnChange}/>
         <Board
           stagesTasks={stagesTasks}

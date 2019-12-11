@@ -10,7 +10,12 @@ class Controls extends Component {
   }
 
   render() {
-    const {OnClickCreateTask, buttonCond, handleOnChange, selectedTask } = this.props;
+    const {OnClickCreateTask, 
+           buttonCond, 
+           handleOnChange, 
+           selectedTask, 
+           handleOnChangeButtons,
+           activateButtons } = this.props;
     return (
       <div style={{ padding: '1rem', background: '#D6F3FF' }}>
         <h1>Controls</h1>
@@ -38,25 +43,30 @@ class Controls extends Component {
             style={{ fontSize: '1rem' }}
             data-testid="selected-task-field"
             value={selectedTask}
+            onChange={handleOnChangeButtons}
           />
           <button
             style={{ marginLeft: '1rem' }}
-            disabled
+            disabled={activateButtons.back}
             data-testid="move-back-btn"
+            onClick={}
           >
             Move back
           </button>
           <button
             style={{ marginLeft: '1rem' }}
-            disabled
+            disabled={activateButtons.forward}
             data-testid="move-forward-btn"
+            onClick={}
+
           >
             Move forward
           </button>
           <button
             style={{ marginLeft: '1rem' }}
-            disabled
+            disabled={activateButtons.delete}
             data-testid="delete-btn"
+            onClick={}
           >
             Delete
           </button>
