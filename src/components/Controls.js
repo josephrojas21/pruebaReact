@@ -15,7 +15,8 @@ class Controls extends Component {
            handleOnChange, 
            selectedTask, 
            handleOnChangeButtons,
-           activateButtons } = this.props;
+           activateButtons,
+           handleButtonActions } = this.props;
     return (
       <div style={{ padding: '1rem', background: '#D6F3FF' }}>
         <h1>Controls</h1>
@@ -43,13 +44,15 @@ class Controls extends Component {
             style={{ fontSize: '1rem' }}
             data-testid="selected-task-field"
             value={selectedTask}
+            id="selectedInput"
             onChange={handleOnChangeButtons}
           />
           <button
             style={{ marginLeft: '1rem' }}
             disabled={activateButtons.back}
             data-testid="move-back-btn"
-            onClick={}
+            id="move-back-btn"
+            onClick={handleButtonActions}
           >
             Move back
           </button>
@@ -57,7 +60,8 @@ class Controls extends Component {
             style={{ marginLeft: '1rem' }}
             disabled={activateButtons.forward}
             data-testid="move-forward-btn"
-            onClick={}
+            id="move-forward-btn"
+            onClick={handleButtonActions}
 
           >
             Move forward
@@ -66,7 +70,8 @@ class Controls extends Component {
             style={{ marginLeft: '1rem' }}
             disabled={activateButtons.delete}
             data-testid="delete-btn"
-            onClick={}
+            id="delete-btn"
+            onClick={handleButtonActions}
           >
             Delete
           </button>

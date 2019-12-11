@@ -3,6 +3,7 @@ import './App.css';
 
 import Controls from './components/Controls';
 import Board from './components/Board';
+import {btnNoBack, btnAll, btnNoForward}  from './utils/buttonCond'
 
 const NUM_STAGES = 4;
 
@@ -35,6 +36,7 @@ class App extends Component {
 
     this.OnClickCreateTask = this.OnClickCreateTask.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleButtonActions = this.handleButtonActions.bind(this);
   }
 
   // this function is for create  a new task
@@ -62,17 +64,11 @@ class App extends Component {
         }
     }
     if(stage === 0 ){
-      buttons.back = true; 
-      buttons.delete = false;
-      buttons.forward = false
+      buttons = btnNoBack
     }else if(stage === 1 || stage === 2){
-      buttons.back = false;
-      buttons.forward = false;
-      buttons.delete = false;
+      buttons = btnAll
     }else{
-      buttons.back = false;
-      buttons.forward = true;
-      buttons.delete = false;
+      buttons = btnNoForward
     }
     this.setState({
       selectedTask: document.getElementById(id).innerHTML,
@@ -94,7 +90,47 @@ class App extends Component {
   }
 
   handleButtonActions(e){
-    
+    let task = this.state.tasks;
+    let pos = null, temp = null, buttons = this.state.activateButtons;
+    switch (e.target.id) {
+      case 'move-back-btn':
+          for (const key in task) {
+            task[key].name === this.state.selectedTask ? pos = key   : false ;
+          }
+          temp = task[pos];
+          task.splice(pos,1);
+          temp.stage--;
+          temp.stage === 0 ? buttons = btnNoBack : false;
+          temp.stage === 1 || temp.stage === 2 ?  buttons = btnAll : false;
+          //temp.stage === 3 ? buttons = btnNoForward : false
+          task.push(temp)
+          this.setState({ tasks: task, activateButtons: buttons})
+        break;
+      case 'move-forward-btn':
+          for (const key in task) {
+            task[key].name === this.state.selectedTask ? pos = key  : false ;
+          }
+          temp = task[pos];
+          task.splice(pos,1);
+          temp.stage++;
+          //temp.stage === 0 ? buttons = btnNoBack : false;
+          temp.stage === 1 || temp.stage === 2 ?  buttons = btnAll : false;
+          temp.stage === 3 ? buttons = btnNoForward : false;
+          task.push(temp)
+          this.setState({tasks: task})
+        break;
+      case 'delete-btn':
+        for (const key in task) {
+          task[key].name === this.state.selectedTask ? pos = key  : false ;
+        }
+        task.splice(pos,1)
+        this.setState({tasks: task , selectedTask: ''})
+        
+        break;
+      default:
+
+        break;
+    }
   }
 
   
@@ -120,7 +156,8 @@ class App extends Component {
         selectedTask={selectedTask}
         activateButtons={activateButtons}
         handleOnChangeButtons={this.handleOnChangeButtons}
-        handleOnChange={this.handleOnChange}/>
+        handleOnChange={this.handleOnChange}
+        handleButtonActions={this.handleButtonActions}/>
         <Board
           stagesTasks={stagesTasks}
           stagesNames={this.stagesNames}
